@@ -6,13 +6,15 @@ import { SITE_CONFIG } from "@/config/site"
 import { getPrimaryCategories, getTagsForCategory } from "@/config/taxonomy"
 import { localePath } from "@/utils/routes"
 import { t } from "@/utils/translations"
+import PageViewCounter from "@/components/analytics/PageViewCounter.astro"
 import logo from "@/assets/logo.svg"
 
 interface Props {
   lang: Locale
+  path?: string
 }
 
-const { lang } = Astro.props
+const { lang, path = "/" } = Astro.props
 const year = new Date().getFullYear()
 const primaryCategories = getPrimaryCategories()
 ---
@@ -63,7 +65,10 @@ const primaryCategories = getPrimaryCategories()
           <Icon name="rss" class="size-4" dataIcon="inline-start" />
         </a>
       </div>
-      <p class="text-xs">© {year} {SITE_CONFIG.name}</p>
+      <div class="flex items-center justify-between gap-4">
+        <p class="text-xs">© {year} {SITE_CONFIG.name}</p>
+        <PageViewCounter lang={lang} path={path} />
+      </div>
     </div>
     {
       primaryCategories.map((category) => (
