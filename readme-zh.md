@@ -78,11 +78,23 @@ featured: false
 常用文件：
 
 ```text
+AGENTS.md                # 编码代理说明
+DESIGN.md                # 设计令牌和视觉识别说明
 src/config/site.ts       # 站点名、域名、仓库、首页布局
 src/config/locales.ts    # 语言和文字方向
 src/config/taxonomy.ts   # 分类和标签
 src/i18n/*.json          # 界面文案
 ```
+
+设计令牌流程：
+
+```bash
+pnpm design:lint     # 校验 DESIGN.md
+pnpm design:theme    # 生成 Tailwind v4 @theme CSS
+```
+
+生成的 Tailwind v4 theme 写入 `src/styles/design-theme.css`。当前运行时主题仍由
+`src/styles/global.css` 通过 CSS 变量完成明暗主题切换。
 
 已配置语言：
 

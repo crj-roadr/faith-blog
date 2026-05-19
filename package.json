@@ -22,6 +22,8 @@
     "astro": "astro",
     "test": "vitest run",
     "typecheck": "astro check",
+    "design:lint": "pnpm dlx @google/design.md lint DESIGN.md",
+    "design:theme": "node scripts/export-design-theme.mjs",
     "check": "pnpm build",
     "deploy": "pnpm build && wrangler deploy"
   },

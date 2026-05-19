@@ -78,11 +78,24 @@ Remote `heroImage` values must include `heroImageWidth` and `heroImageHeight`.
 Common files:
 
 ```text
+AGENTS.md                # Coding agent instructions
+DESIGN.md                # Design tokens and visual identity notes
 src/config/site.ts       # Site name, URL, repository, homepage layout
 src/config/locales.ts    # Locales and text direction
 src/config/taxonomy.ts   # Categories and tags
 src/i18n/*.json          # Interface text
 ```
+
+Design token workflow:
+
+```bash
+pnpm design:lint     # Validate DESIGN.md
+pnpm design:theme    # Generate Tailwind v4 @theme CSS
+```
+
+The generated Tailwind v4 theme is written to
+`src/styles/design-theme.css`. The live runtime theme in
+`src/styles/global.css` still uses CSS variable indirection for dark mode.
 
 Configured locales:
 
