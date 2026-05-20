@@ -1,10 +1,18 @@
+---
+import { DEFAULT_LOCALE } from "@/config/locales"
+import { SITE_CONFIG } from "@/config/site"
+
+const homePath = `/${DEFAULT_LOCALE}/`
+const homeUrl = `${SITE_CONFIG.url}${homePath}`
+---
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="refresh" content="0; url=/en/" />
-    <link rel="canonical" href="https://polyglow.realrip.com/en/" />
+    <meta http-equiv="refresh" content={`0; url=${homePath}`} />
+    <link rel="canonical" href={homeUrl} />
   </head>
   <body>
-    <a href="https://polyglow.realrip.com/en/">Continue to Polyglow</a>
+    <a href={homePath}>Continue to Polyglow</a>
   </body>
 </html>

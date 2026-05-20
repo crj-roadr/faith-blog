@@ -15,10 +15,10 @@ function normalizePublicString(value: string | undefined): string {
 }
 
 const googleTagManagerId = normalizeGoogleTagManagerId(
-  import.meta.env.PUBLIC_GTM_ID ?? "GTM-5QW2732G"
+  import.meta.env.PUBLIC_GTM_ID
 )
 const googleAdsenseClientId = normalizeGoogleAdsenseClientId(
-  import.meta.env.PUBLIC_ADSENSE_CLIENT_ID ?? "ca-pub-4552045179808692"
+  import.meta.env.PUBLIC_ADSENSE_CLIENT_ID
 )
 const x402PayTo = normalizePublicString(import.meta.env.PUBLIC_X402_PAY_TO)
 const x402Network = normalizePublicString(
