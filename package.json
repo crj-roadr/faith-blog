@@ -28,13 +28,13 @@
     "deploy": "pnpm build && wrangler deploy"
   },
   "dependencies": {
-    "@astrojs/mdx": "^5.0.4",
+    "@astrojs/mdx": "^5.0.6",
     "@astrojs/partytown": "^2.1.7",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
     "@iconify-json/lucide": "^1.2.106",
     "@tailwindcss/vite": "^4.2.1",
-    "astro": "^6.3.1",
+    "astro": "^6.3.5",
     "astro-expressive-code": "^0.42.0",
     "astro-icon": "^1.1.5",
     "astro-pagefind": "^1.8.6",

@@ -2,3 +2,8 @@ allowBuilds:
   esbuild: true
   sharp: true
   workerd: true
+
+overrides:
+  devalue: 5.8.1
+  ws: 8.20.1
+  yaml: 2.8.4
