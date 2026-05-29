@@ -205,12 +205,7 @@ Polyglow 可以发布到任意静态托管平台，包括 Cloudflare Pages、Ver
 pnpm deploy
 ```
 
-`pnpm deploy` 会先执行 `pnpm build`，再运行 `scripts/deploy-worker.mjs` 调用 `wrangler deploy`。部署脚本支持重试：
-
-```bash
-WRANGLER_DEPLOY_ATTEMPTS=3
-WRANGLER_DEPLOY_RETRY_DELAY_MS=15000
-```
+`pnpm deploy` 会先执行 `pnpm build`，再直接调用 `wrangler deploy`。
 
 修改 Worker 配置后，用以下命令验证打包：
 

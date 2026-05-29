@@ -21,8 +21,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "pnpm build",
-    "deploy": "pnpm build && pnpm run deploy:worker",
-    "deploy:worker": "node scripts/deploy-worker.mjs"
+    "deploy": "pnpm build && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.6",

@@ -225,13 +225,7 @@ The repository also includes an optional Cloudflare Workers Static Assets path:
 pnpm deploy
 ```
 
-`pnpm deploy` runs `pnpm build`, then `scripts/deploy-worker.mjs`, which calls
-`wrangler deploy` with retry support. Useful retry variables:
-
-```bash
-WRANGLER_DEPLOY_ATTEMPTS=3
-WRANGLER_DEPLOY_RETRY_DELAY_MS=15000
-```
+`pnpm deploy` runs `pnpm build`, then `wrangler deploy` directly.
 
 After Worker config changes, validate packaging with:
 
