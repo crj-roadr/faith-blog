@@ -1,30 +1,63 @@
 ---
-import { Picture } from "astro:assets"
-import { optimizeRemoteImageUrl } from "@/config/assets"
+import { Image, Picture } from "astro:assets"
+import {
+  getImagePreset,
+  resolveImageDimensions,
+  resolveImageLoading,
+  type ImageFit,
+  type ImageLayout,
+  type ImageQuality,
+  type ImageVariant,
+} from "@/config/images"
 
 interface Props {
   src: string | ImageMetadata
   alt: string
+  variant?: ImageVariant
   width?: number
   height?: number
   widths?: number[]
   sizes?: string
+  layout?: ImageLayout
+  fit?: ImageFit
+  position?: string
+  quality?: ImageQuality
+  asPicture?: boolean
+  inferSize?: boolean
+  formats?: ("avif" | "webp")[]
+  fallbackFormat?: "avif" | "webp" | "jpeg" | "jpg" | "png"
+  format?: "avif" | "webp" | "jpeg" | "jpg" | "png"
   class?: string
+  priority?: boolean
   loading?: "eager" | "lazy"
   decoding?: "async" | "sync" | "auto"
+  fetchpriority?: "high" | "low" | "auto"
 }
 
 const {
   src,
   alt,
+  variant = "content",
   width,
   height,
   widths,
   sizes,
+  layout,
+  fit,
+  position,
+  quality,
+  asPicture,
+  inferSize = false,
+  formats,
+  fallbackFormat,
+  format,
   class: className,
-  loading = "lazy",
-  decoding = "async",
+  priority = false,
+  loading,
+  decoding,
+  fetchpriority,
 } = Astro.props
+const preset = getImagePreset(variant)
 const isString = typeof src === "string"
 const stringSrc = isString ? (src as string) : undefined
 const isUnsplashImage = stringSrc?.startsWith("https://images.unsplash.com/")
@@ -32,19 +65,28 @@ const assetFormat = isString ? undefined : (src as ImageMetadata).format
 const isSvgAsset = assetFormat === "svg"
 const isSvgString = stringSrc?.toLowerCase().split("?")[0]?.endsWith(".svg")
 const isSvgImage = isSvgAsset || isSvgString
-const resolvedSrc = stringSrc ? optimizeRemoteImageUrl(stringSrc, width) : src
-const imageWidth = width ?? (isString ? 1200 : undefined)
-const imageHeight = height ?? (isString ? 800 : undefined)
-const imageWidths =
-  widths ?? (isString ? [420, 640, 720, 960, 1200] : [480, 768, 1024, 1400])
-const imageSizes =
-  sizes ??
-  (isString
-    ? "(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) 50vw, 720px"
-    : "(max-width: 768px) 100vw, 50vw")
-const fetchpriority = loading === "eager" ? "high" : undefined
+const resolvedSrc = src
+const dimensions =
+  isSvgImage || (isString && inferSize)
+    ? undefined
+    : resolveImageDimensions(src, width, height)
+const imageWidths = widths ?? preset.widths
+const imageSizes = sizes ?? preset.sizes
+const imageLayout = layout ?? preset.layout
+const imageFit = fit ?? preset.fit
+const imagePosition = position ?? preset.position
+const imageQuality = quality ?? preset.quality
+const shouldRenderPicture = asPicture ?? preset.asPicture
+const loadingAttrs = resolveImageLoading({
+  priority,
+  loading,
+  decoding,
+  fetchpriority,
+})
 const crossOrigin = isUnsplashImage ? "anonymous" : undefined
-const imageFormats = ["avif"]
+const imageFormats = formats ?? ["avif", "webp"]
+const imageFallbackFormat = fallbackFormat ?? "webp"
+const imageFormat = format ?? "avif"
 const svgSrc = isString ? (resolvedSrc as string) : (resolvedSrc as ImageMetadata).src
 ---
 
@@ -55,40 +97,132 @@ const svgSrc = isString ? (resolvedSrc as string) : (resolvedSrc as ImageMetadat
       alt={alt}
       width={width}
       height={height}
-      loading={loading}
-      decoding={decoding}
-      fetchpriority={fetchpriority}
+      loading={loadingAttrs.loading}
+      decoding={loadingAttrs.decoding}
+      fetchpriority={loadingAttrs.fetchpriority}
       crossorigin={crossOrigin}
       class={className}
     />
-  ) : isString ? (
+  ) : isString && inferSize && shouldRenderPicture ? (
     <Picture
       src={resolvedSrc as string}
       alt={alt}
-      width={imageWidth as number}
-      height={imageHeight as number}
-      loading={loading}
-      decoding={decoding}
-      fetchpriority={fetchpriority}
+      inferSize
+      priority={loadingAttrs.priority}
+      loading={loadingAttrs.loading}
+      decoding={loadingAttrs.decoding}
+      fetchpriority={loadingAttrs.fetchpriority}
       crossorigin={crossOrigin}
       class={className}
       widths={imageWidths}
       sizes={imageSizes}
       formats={imageFormats}
-      fallbackFormat="avif"
+      fallbackFormat={imageFallbackFormat}
+      layout={imageLayout}
+      fit={imageFit}
+      position={imagePosition}
+      quality={imageQuality}
     />
-  ) : (
+  ) : isString && shouldRenderPicture ? (
     <Picture
-      src={resolvedSrc as ImageMetadata}
+      src={resolvedSrc as string}
       alt={alt}
-      loading={loading}
-      decoding={decoding}
-      fetchpriority={fetchpriority}
+      width={dimensions?.width as number}
+      height={dimensions?.height as number}
+      priority={loadingAttrs.priority}
+      loading={loadingAttrs.loading}
+      decoding={loadingAttrs.decoding}
+      fetchpriority={loadingAttrs.fetchpriority}
+      crossorigin={crossOrigin}
       class={className}
       widths={imageWidths}
       sizes={imageSizes}
       formats={imageFormats}
-      fallbackFormat="avif"
+      fallbackFormat={imageFallbackFormat}
+      layout={imageLayout}
+      fit={imageFit}
+      position={imagePosition}
+      quality={imageQuality}
+    />
+  ) : shouldRenderPicture ? (
+    <Picture
+      src={resolvedSrc as ImageMetadata}
+      alt={alt}
+      width={dimensions?.width as number}
+      height={dimensions?.height as number}
+      priority={loadingAttrs.priority}
+      loading={loadingAttrs.loading}
+      decoding={loadingAttrs.decoding}
+      fetchpriority={loadingAttrs.fetchpriority}
+      crossorigin={crossOrigin}
+      class={className}
+      widths={imageWidths}
+      sizes={imageSizes}
+      formats={imageFormats}
+      fallbackFormat={imageFallbackFormat}
+      layout={imageLayout}
+      fit={imageFit}
+      position={imagePosition}
+      quality={imageQuality}
+    />
+  ) : isString && inferSize ? (
+    <Image
+      src={resolvedSrc as string}
+      alt={alt}
+      inferSize
+      priority={loadingAttrs.priority}
+      loading={loadingAttrs.loading}
+      decoding={loadingAttrs.decoding}
+      fetchpriority={loadingAttrs.fetchpriority}
+      crossorigin={crossOrigin}
+      class={className}
+      widths={imageWidths}
+      sizes={imageSizes}
+      layout={imageLayout}
+      fit={imageFit}
+      position={imagePosition}
+      quality={imageQuality}
+      format={imageFormat}
+    />
+  ) : isString ? (
+    <Image
+      src={resolvedSrc as string}
+      alt={alt}
+      width={dimensions?.width as number}
+      height={dimensions?.height as number}
+      priority={loadingAttrs.priority}
+      loading={loadingAttrs.loading}
+      decoding={loadingAttrs.decoding}
+      fetchpriority={loadingAttrs.fetchpriority}
+      crossorigin={crossOrigin}
+      class={className}
+      widths={imageWidths}
+      sizes={imageSizes}
+      layout={imageLayout}
+      fit={imageFit}
+      position={imagePosition}
+      quality={imageQuality}
+      format={imageFormat}
+    />
+  ) : (
+    <Image
+      src={resolvedSrc as ImageMetadata}
+      alt={alt}
+      width={dimensions?.width as number}
+      height={dimensions?.height as number}
+      priority={loadingAttrs.priority}
+      loading={loadingAttrs.loading}
+      decoding={loadingAttrs.decoding}
+      fetchpriority={loadingAttrs.fetchpriority}
+      crossorigin={crossOrigin}
+      class={className}
+      widths={imageWidths}
+      sizes={imageSizes}
+      layout={imageLayout}
+      fit={imageFit}
+      position={imagePosition}
+      quality={imageQuality}
+      format={imageFormat}
     />
   )
 }
