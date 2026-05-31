@@ -28,24 +28,34 @@ const attrValue = (tag, name) => {
 walk(distDir)
 
 const failures = []
+const homepagePattern = /^(en|zh|fr|es|ru|ja|ko|pt|de|id|ar)\/index\.html$/
+
+const checkPriorityImage = (path, label, image) => {
+  const src = attrValue(image, "src")
+  const loading = attrValue(image, "loading")
+  const fetchpriority = attrValue(image, "fetchpriority")
+
+  if (!src) failures.push(`${path}: ${label} has no src`)
+  if (loading === "lazy") failures.push(`${path}: ${label} is lazy loaded`)
+  if (fetchpriority !== "high") {
+    failures.push(`${path}: ${label} missing fetchpriority="high"`)
+  }
+}
 
 for (const file of htmlFiles) {
   const html = readFileSync(file, "utf8")
   const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1]
   if (!main) continue
 
-  const firstImage = main.match(/<img\b[^>]*>/i)?.[0]
+  const images = Array.from(main.matchAll(/<img\b[^>]*>/gi), (match) => match[0])
+  const firstImage = images[0]
   if (!firstImage) continue
 
   const path = relative(distDir, file)
-  const src = attrValue(firstImage, "src")
-  const loading = attrValue(firstImage, "loading")
-  const fetchpriority = attrValue(firstImage, "fetchpriority")
+  checkPriorityImage(path, "first main image", firstImage)
 
-  if (!src) failures.push(`${path}: first main image has no src`)
-  if (loading === "lazy") failures.push(`${path}: first main image is lazy loaded`)
-  if (fetchpriority !== "high") {
-    failures.push(`${path}: first main image missing fetchpriority="high"`)
+  if (homepagePattern.test(path) && images[1]) {
+    checkPriorityImage(path, "second homepage image", images[1])
   }
 }
 
