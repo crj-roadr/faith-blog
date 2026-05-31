@@ -37,9 +37,13 @@ account, wallet, or Cloudflare credentials.
 
 ## Verification Examples
 
-- A production article page has reached 100 scores across the four PageSpeed
+| Lighthouse | Agent Readiness |
+| --- | --- |
+| [![Polyglow Lighthouse score](public/lighthouse-score---https---polyglow-realrip-com.svg)](https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fpolyglow.realrip.com%2F) | [![Polyglow Agent Readiness score](public/agent-readiness-https---polyglow-realrip-com.avif)](https://isitagentready.com/) |
+
+- The production site has reached 100 scores across the four PageSpeed
   Insights Lighthouse categories in lab testing:
-  [PageSpeed report](https://pagespeed.web.dev/analysis/https-polyglow-realrip-com-en-posts-20160901-acfun-stock/4kxuvzgck0?form_factor=mobile).
+  [PageSpeed Insights](https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fpolyglow.realrip.com%2F).
 - The agent-facing surface is designed for
   [Is Your Site Agent-Ready?](https://isitagentready.com/) checks across
   discoverability, content access, bot access, protocol discovery, and commerce.
