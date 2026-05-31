@@ -66,6 +66,13 @@ const PAYMENT_ROUTES = [
 const BOT_USER_AGENT_RE =
   /\b(bot|crawler|spider|slurp|gptbot|claudebot|anthropic|perplexity|bytespider|ccbot|amazonbot|applebot|google-extended)\b/i
 
+function acceptsMarkdown(request: Request): boolean {
+  return request.headers
+    .get("Accept")
+    ?.split(",")
+    .some((value) => value.trim().toLowerCase().startsWith("text/markdown")) ?? false
+}
+
 function normalizeBoolean(value: string | undefined, fallback: boolean): boolean {
   if (value === undefined) return fallback
   return ["1", "true", "yes", "on"].includes(value.trim().toLowerCase())
@@ -157,6 +164,103 @@ function paymentRoutes(config: GatewayConfig) {
   )
 }
 
+function decodeHtml(value: string): string {
+  return value
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+}
+
+function extractAttribute(html: string, pattern: RegExp): string | undefined {
+  return decodeHtml(pattern.exec(html)?.[1]?.trim() ?? "")
+}
+
+function stripTags(html: string): string {
+  return decodeHtml(html.replace(/<[^>]+>/g, " "))
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim()
+}
+
+function htmlToMarkdown(html: string): string {
+  const title =
+    extractAttribute(html, /<title[^>]*>([^<]*)<\/title>/i) ||
+    extractAttribute(html, /<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']+)["']/i)
+  const description = extractAttribute(
+    html,
+    /<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["']/i
+  )
+  const image = extractAttribute(
+    html,
+    /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i
+  )
+  const jsonLd = [...html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)]
+    .map((match) => match[1].trim())
+    .filter(Boolean)
+
+  const main = /<main[^>]*>([\s\S]*?)<\/main>/i.exec(html)?.[1] ?? html
+  let body = main
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<nav[\s\S]*?<\/nav>/gi, "")
+    .replace(/<header[\s\S]*?<\/header>/gi, "")
+    .replace(/<footer[\s\S]*?<\/footer>/gi, "")
+    .replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, "\n# $1\n")
+    .replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, "\n## $1\n")
+    .replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, "\n### $1\n")
+    .replace(/<h4[^>]*>([\s\S]*?)<\/h4>/gi, "\n#### $1\n")
+    .replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, "\n- $1")
+    .replace(/<a[^>]+href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi, "[$2]($1)")
+    .replace(/<img[^>]+alt=["']([^"']*)["'][^>]+src=["']([^"']+)["'][^>]*>/gi, "![$1]($2)")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/p>/gi, "\n\n")
+    .replace(/<\/div>/gi, "\n")
+    .replace(/<\/section>/gi, "\n")
+
+  body = stripTags(body)
+
+  const frontmatter = [
+    "---",
+    title ? `title: ${JSON.stringify(title)}` : "",
+    description ? `description: ${JSON.stringify(description)}` : "",
+    image ? `image: ${JSON.stringify(image)}` : "",
+    "---",
+  ].filter(Boolean)
+
+  const sections = [frontmatter.join("\n"), body]
+  if (jsonLd.length > 0) sections.push(["```json", jsonLd.join("\n"), "```"].join("\n"))
+
+  return `${sections.filter(Boolean).join("\n\n")}\n`
+}
+
+function markdownTokenCount(markdown: string): string {
+  return String(Math.max(1, Math.ceil(markdown.split(/\s+/).filter(Boolean).length * 1.35)))
+}
+
+async function markdownResponse(request: Request, env: Env): Promise<Response | null> {
+  if (!acceptsMarkdown(request)) return null
+
+  const response = await env.ASSETS.fetch(request)
+  const contentType = response.headers.get("Content-Type") ?? ""
+  if (!contentType.toLowerCase().includes("text/html")) return response
+
+  const markdown = htmlToMarkdown(await response.text())
+  const headers = new Headers(response.headers)
+  headers.set("Content-Type", "text/markdown; charset=utf-8")
+  headers.set("Vary", "Accept")
+  headers.set("x-markdown-tokens", markdownTokenCount(markdown))
+  headers.delete("Content-Length")
+
+  return new Response(markdown, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  })
+}
+
 function createApp(config: GatewayConfig) {
   const app = new Hono<{ Bindings: Env }>()
   const facilitator = new HTTPFacilitatorClient({
@@ -200,7 +304,7 @@ export default {
   ): Promise<Response> {
     const config = readConfig(env)
     if (!config || !shouldCharge(request, config)) {
-      return env.ASSETS.fetch(request)
+      return (await markdownResponse(request, env)) ?? env.ASSETS.fetch(request)
     }
 
     return await createApp(config).fetch(request, env)

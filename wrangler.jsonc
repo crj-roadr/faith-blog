@@ -7,21 +7,7 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    "run_worker_first": [
-      "/api",
-      "/api/*",
-      "/en/posts/*",
-      "/zh/posts/*",
-      "/fr/posts/*",
-      "/es/posts/*",
-      "/ru/posts/*",
-      "/ja/posts/*",
-      "/ko/posts/*",
-      "/pt/posts/*",
-      "/de/posts/*",
-      "/id/posts/*",
-      "/ar/posts/*"
-    ],
+    "run_worker_first": ["/*"],
     "html_handling": "force-trailing-slash",
     "not_found_handling": "404-page"
   },

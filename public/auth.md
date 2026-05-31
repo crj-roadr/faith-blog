@@ -1,4 +1,4 @@
-# Polyglow Agent Authentication
+# auth.md - Polyglow Agent Authentication
 
 Polyglow publishes public editorial pages and optional x402 protected API probes.
 
@@ -16,9 +16,20 @@ Polyglow publishes public editorial pages and optional x402 protected API probes
 3. Complete payment through an x402-compatible facilitator and network supported by the deployment.
 4. Retry the same endpoint with the payment proof headers required by the x402 protocol.
 
-## OAuth and OIDC
+## Agent Registration
 
-Polyglow does not publish an OAuth authorization server, OpenID Provider, token endpoint, JWKS endpoint, or dynamic client registration endpoint for this static deployment.
+Polyglow accepts anonymous agent discovery and x402-paid API access. No human account, dashboard account, or pre-registration is required for read-only content discovery.
 
-Agents should not use OAuth or OIDC for this deployment. Use the x402 payment challenge on the protected API endpoints instead.
+Agents that require a registration document can use this file as the registration entrypoint:
 
+- Registration URI: `https://polyglow.realrip.com/auth.md`
+- Supported identity type: `anonymous`
+- Credential type: `x402`
+- Protected API probes: `/api`, `/api/v1`
+- Payment challenge location: HTTP 402 `payment-required` response header
+
+## OAuth and OIDC Discovery
+
+Polyglow publishes static OAuth/OIDC discovery metadata so agents can distinguish OAuth discovery from x402 payment discovery. The current public deployment does not issue bearer tokens for content access.
+
+Use the x402 payment challenge on the protected API endpoints for paid access.

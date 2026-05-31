@@ -230,12 +230,19 @@ Polyglow publishes static API discovery files for agents:
   entries for `/api` and `/api/v1`.
 - `/openapi.json` describes the x402 protected API probes.
 - `/auth.md` explains agent access and x402 payment flow.
+- `/.well-known/oauth-authorization-server`,
+  `/.well-known/openid-configuration`, and
+  `/.well-known/oauth-protected-resource` publish discovery metadata for
+  agents that expect OAuth/OIDC documents.
 
-The project does not publish OAuth/OIDC metadata by default because it does not
-include an OAuth authorization server. Add
-`/.well-known/openid-configuration`, `/.well-known/oauth-authorization-server`,
-or `/.well-known/oauth-protected-resource` only when a deployment has a real
-issuer, token endpoint, JWKS endpoint, scopes, and registration policy.
+The current public access path is still x402 payment. The static OAuth/OIDC
+documents are discovery metadata; this repository does not issue bearer tokens
+or manage user accounts by default.
+
+When deployed through the Worker adapter, requests with
+`Accept: text/markdown` receive a Markdown representation with
+`Content-Type: text/markdown` and `x-markdown-tokens`. Browser requests keep
+the normal HTML response.
 
 ## Design
 

@@ -53,6 +53,16 @@ assert.match(
   /\/auth\.md\s*\n\s*Content-Type:\s*text\/markdown/,
   "_headers must serve auth.md as Markdown"
 )
+assert.match(
+  headers,
+  /\/\.well-known\/oauth-authorization-server\s*\n\s*Content-Type:\s*application\/json/,
+  "_headers must serve OAuth authorization server metadata as JSON"
+)
+assert.match(
+  headers,
+  /\/\.well-known\/oauth-protected-resource\s*\n\s*Content-Type:\s*application\/json/,
+  "_headers must serve OAuth protected resource metadata as JSON"
+)
 
 const apiCatalog = readJson("public/.well-known/api-catalog")
 assert.ok(Array.isArray(apiCatalog.linkset), "API catalog must contain a linkset array")
@@ -81,9 +91,38 @@ assert.ok(
 )
 
 const authMd = read("public/auth.md")
-assert.match(authMd, /# Polyglow Agent Authentication/)
+assert.match(authMd, /^# .*auth\.md/im)
 assert.match(authMd, /x402/)
-assert.match(authMd, /does not publish an OAuth authorization server/)
+assert.match(authMd, /Agent Registration/)
+
+const oauthMetadata = readJson("public/.well-known/oauth-authorization-server")
+assert.equal(oauthMetadata.issuer, "https://polyglow.realrip.com")
+assert.ok(oauthMetadata.authorization_endpoint, "OAuth metadata must include authorization_endpoint")
+assert.ok(oauthMetadata.token_endpoint, "OAuth metadata must include token_endpoint")
+assert.ok(oauthMetadata.jwks_uri, "OAuth metadata must include jwks_uri")
+assert.ok(Array.isArray(oauthMetadata.grant_types_supported))
+assert.ok(oauthMetadata.agent_auth?.register_uri, "OAuth metadata must include agent_auth.register_uri")
+
+const protectedResource = readJson("public/.well-known/oauth-protected-resource")
+assert.equal(protectedResource.resource, "https://polyglow.realrip.com")
+assert.ok(Array.isArray(protectedResource.authorization_servers))
+assert.ok(protectedResource.authorization_servers.includes("https://polyglow.realrip.com"))
+assert.ok(Array.isArray(protectedResource.scopes_supported))
+assert.ok(protectedResource.bearer_methods_supported.includes("header"))
+
+const openidConfiguration = readJson("public/.well-known/openid-configuration")
+assert.equal(openidConfiguration.issuer, oauthMetadata.issuer)
+
+const jwks = readJson("public/.well-known/jwks.json")
+assert.ok(Array.isArray(jwks.keys), "JWKS must contain a keys array")
+
+const worker = read("src/x402/cloudflare-worker.ts")
+assert.match(worker, /text\/markdown/, "Worker must negotiate text/markdown")
+assert.match(worker, /x-markdown-tokens/, "Worker must emit x-markdown-tokens")
+
+const layout = read("src/layouts/main.astro")
+assert.match(layout, /navigator\.modelContext/, "Layout must register WebMCP tools")
+assert.match(layout, /registerTool/, "Layout must call WebMCP registerTool")
 
 const skill = read("public/.well-known/agent-skills/polyglow-content/SKILL.md")
 const skillDigest = createHash("sha256").update(skill).digest("hex")

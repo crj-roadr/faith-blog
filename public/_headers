@@ -9,3 +9,15 @@
 
 /auth.md
   Content-Type: text/markdown; charset=utf-8
+
+/.well-known/oauth-authorization-server
+  Content-Type: application/json
+
+/.well-known/openid-configuration
+  Content-Type: application/json
+
+/.well-known/oauth-protected-resource
+  Content-Type: application/json
+
+/.well-known/jwks.json
+  Content-Type: application/json

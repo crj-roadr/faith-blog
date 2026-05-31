@@ -216,8 +216,12 @@ Polyglow 发布静态 API 发现文件，供代理自动读取：
   `/api/v1` 的 linkset 条目。
 - `/openapi.json` 描述受 x402 保护的 API 探测端点。
 - `/auth.md` 说明代理访问方式和 x402 支付流程。
+- `/.well-known/oauth-authorization-server`、`/.well-known/openid-configuration`
+  和 `/.well-known/oauth-protected-resource` 为需要 OAuth/OIDC 文档的代理发布发现元数据。
 
-项目默认不发布 OAuth/OIDC 元数据，因为仓库不包含 OAuth 授权服务器。只有部署环境具备真实的 issuer、token endpoint、JWKS endpoint、scope 和注册策略时，才添加 `/.well-known/openid-configuration`、`/.well-known/oauth-authorization-server` 或 `/.well-known/oauth-protected-resource`。
+当前公开访问路径仍是 x402 支付。静态 OAuth/OIDC 文件仅作为发现元数据；本仓库默认不签发 bearer token，也不管理用户账号。
+
+通过 Worker 适配器部署时，带有 `Accept: text/markdown` 的请求会收到 Markdown 表示，响应包含 `Content-Type: text/markdown` 和 `x-markdown-tokens`。浏览器请求继续返回正常 HTML。
 
 ## 设计
 
