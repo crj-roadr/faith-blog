@@ -25,6 +25,7 @@ addresses.
 - `@astrojs/partytown` for optional Google Tag Manager.
 - Optional Google AdSense through `src/components/widgets/Adsense.astro`.
 - Optional x402 metadata through `src/components/widgets/X402.astro`.
+- Optional x402 Cloudflare gateway through `src/x402/cloudflare-worker.ts`.
 - Astro image optimization through `OptimizedPicture.astro`.
 - Optional Cloudflare Workers Static Assets deployment.
 
@@ -78,8 +79,10 @@ Use pnpm for Node.js work. Do not add npm, yarn, or bun lockfiles.
   hard-coded visible UI text.
 - Keep Google Tag Manager, Google AdSense, and x402 optional.
 - Keep `src/components/widgets/X402.astro` available as opt-in metadata. Do not
-  add HTTP 402 enforcement or Cloudflare-only middleware unless explicitly
-  requested.
+  add HTTP 402 enforcement outside optional deployment adapters unless
+  explicitly requested.
+- Keep the Cloudflare x402 gateway optional and disabled by default. Ordinary
+  static hosting must continue to work from `dist` without runtime services.
 - Pagefind indexes generated static HTML through `src/integrations/pagefind.ts`.
   Preserve the current searchable surface unless the task explicitly changes
   search scope.

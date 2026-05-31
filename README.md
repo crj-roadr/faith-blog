@@ -172,6 +172,38 @@ PUBLIC_X402_BOT_SCORE_THRESHOLD=30
 `PUBLIC_X402_CHARGE_MODE` accepts `all` or `bot-only`. The x402 widget only
 publishes metadata; it does not enforce HTTP 402 payment.
 
+## Optional x402 Gateway
+
+Polyglow's default build remains static and works on ordinary static hosting.
+Real x402 enforcement needs a runtime adapter that can return
+`402 Payment Required` before serving static assets.
+
+The repository includes an optional Cloudflare Workers adapter at
+`src/x402/cloudflare-worker.ts`. It is disabled by default:
+
+```bash
+X402_ENABLED=false
+```
+
+To enable it on Cloudflare Workers Static Assets, set runtime variables in
+Wrangler or the Cloudflare dashboard:
+
+```bash
+X402_ENABLED=true
+X402_PAY_TO=YourWalletAddress
+X402_NETWORK=solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp
+X402_PRICE=$0.01
+X402_FACILITATOR_URL=https://x402.org/facilitator
+X402_BOT_ONLY=true
+X402_BOT_SCORE_THRESHOLD=30
+```
+
+`/api`, `/api/v1`, and localized post routes are routed through the adapter on
+Cloudflare. The API probe routes always require payment when the gateway is
+enabled; post routes charge bots when `X402_BOT_ONLY=true`. Platforms without a
+runtime adapter can still publish the static site and optional x402 metadata,
+but they cannot enforce payment.
+
 ## Design
 
 `DESIGN.md` records the current visual tokens and UI rules. The live runtime

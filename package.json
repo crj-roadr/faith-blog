@@ -22,6 +22,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "verify:agent": "node scripts/verify-agent-readiness.mjs",
+    "verify:x402": "node scripts/verify-x402-gateway.mjs",
     "deploy": "pnpm build && wrangler deploy"
   },
   "dependencies": {
@@ -30,11 +31,17 @@
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
     "@iconify-json/lucide": "^1.2.106",
+    "@solana/kit": "^5.5.1",
+    "@solana/sysvars": "5.5.1",
     "@tailwindcss/vite": "^4.2.1",
+    "@x402/core": "^2.14.0",
+    "@x402/hono": "^2.14.0",
+    "@x402/svm": "^2.14.0",
     "astro": "^6.3.5",
     "astro-expressive-code": "^0.42.0",
     "astro-icon": "^1.1.5",
     "astro-seo": "^1.1.0",
+    "hono": "^4.12.23",
     "pagefind": "^1.5.2",
     "sirv": "^3.0.2",
     "tailwindcss": "^4.2.1"

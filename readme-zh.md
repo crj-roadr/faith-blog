@@ -161,6 +161,36 @@ PUBLIC_X402_BOT_SCORE_THRESHOLD=30
 
 `PUBLIC_X402_CHARGE_MODE` 支持 `all` 和 `bot-only`。x402 组件只发布元数据，不执行 HTTP 402 支付拦截。
 
+## 可选 x402 网关
+
+Polyglow 默认构建仍是静态站，普通静态托管照常可用。真正执行 x402 收费需要运行时适配器，在返回静态资源之前先返回 `402 Payment Required`。
+
+仓库内置了可选的 Cloudflare Workers 适配器：
+
+```text
+src/x402/cloudflare-worker.ts
+```
+
+默认关闭：
+
+```bash
+X402_ENABLED=false
+```
+
+在 Cloudflare Workers Static Assets 上启用时，在 Wrangler 或 Cloudflare 后台设置运行时变量：
+
+```bash
+X402_ENABLED=true
+X402_PAY_TO=YourWalletAddress
+X402_NETWORK=solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp
+X402_PRICE=$0.01
+X402_FACILITATOR_URL=https://x402.org/facilitator
+X402_BOT_ONLY=true
+X402_BOT_SCORE_THRESHOLD=30
+```
+
+Cloudflare 部署时，`/api`、`/api/v1` 和各语言文章页会进入适配器。启用网关后，API 探测路由始终要求支付；文章页在 `X402_BOT_ONLY=true` 时只对 bot 收费。不支持运行时适配器的平台仍可发布静态站和可选 x402 元数据，但不能执行支付拦截。
+
 ## 设计
 
 `DESIGN.md` 记录当前视觉令牌和 UI 规则。实际运行时主题在 `src/styles/global.css` 中实现。
