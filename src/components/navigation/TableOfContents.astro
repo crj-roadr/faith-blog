@@ -39,13 +39,13 @@ const title = titleByLocale[lang]
         <li>
           <a
             class:list={[
-              "toc-link block rounded-sm py-1 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
+              "block rounded-sm py-1.5 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
               heading.depth === 3 ? "pl-3 text-xs" : "",
             ]}
             href={`#${heading.slug}`}
             title={heading.text}
           >
-            {heading.text}
+            <span class="toc-link-label">{heading.text}</span>
           </a>
         </li>
       ))
@@ -64,11 +64,11 @@ const title = titleByLocale[lang]
     display: none;
   }
 
-  .toc-link {
+  .toc-link-label {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
-    line-height: 1.35;
+    line-height: 1.5;
     overflow: hidden;
     overflow-wrap: anywhere;
   }
