@@ -284,51 +284,51 @@
 }
 
 @supports (text-autospace: normal) {
-  :where(html[lang="zh"], html[lang="ja"], html[lang="ko"]),
-  :where(html[lang="zh"], html[lang="ja"], html[lang="ko"]) .content-prose {
+  :where(html:lang(zh), html:lang(ja), html:lang(ko)),
+  :where(html:lang(zh), html:lang(ja), html:lang(ko)) .article-prose {
     text-autospace: normal;
   }
 }
 
-:where(html[lang="zh"], html[lang="ja"], html[lang="ko"]) .content-prose {
+:where(html:lang(zh), html:lang(ja), html:lang(ko)) .article-prose {
   text-align: justify;
   text-justify: inter-ideograph;
 }
 
-:where(html[lang="zh"], html[lang="ja"], html[lang="ko"])
-  .content-prose
+:where(html:lang(zh), html:lang(ja), html:lang(ko))
+  .article-prose
   :where(p, li) {
   text-align: justify;
   text-justify: inter-ideograph;
 }
 
 :where(
-    html[lang="en"],
-    html[lang="fr"],
-    html[lang="es"],
-    html[lang="ru"],
-    html[lang="pt"],
-    html[lang="de"],
-    html[lang="id"]
+    html:lang(en),
+    html:lang(fr),
+    html:lang(es),
+    html:lang(ru),
+    html:lang(pt),
+    html:lang(de),
+    html:lang(id)
   )
-  .content-prose,
+  .article-prose,
 :where(
-    html[lang="en"],
-    html[lang="fr"],
-    html[lang="es"],
-    html[lang="ru"],
-    html[lang="pt"],
-    html[lang="de"],
-    html[lang="id"]
+    html:lang(en),
+    html:lang(fr),
+    html:lang(es),
+    html:lang(ru),
+    html:lang(pt),
+    html:lang(de),
+    html:lang(id)
   )
-  .content-prose
+  .article-prose
   :where(p, li) {
   text-align: left;
 }
 
-html[dir="rtl"] .content-prose,
-html[dir="rtl"] .content-prose :where(p, li) {
-  text-align: start;
+html:lang(ar) .article-prose,
+html:lang(ar) .article-prose :where(p, li) {
+  text-align: right;
 }
 
 .article-prose
@@ -342,6 +342,10 @@ html[dir="rtl"] .content-prose :where(p, li) {
 
 .article-prose :where(picture img, figure img) {
   @apply w-full;
+}
+
+.content-prose :where(h1) {
+  @apply mt-12 mb-6 text-4xl leading-tight font-semibold text-foreground;
 }
 
 .content-prose :where(h2) {
