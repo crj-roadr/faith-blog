@@ -7,7 +7,7 @@ import PostCardGrid from "@/components/lists/PostCardGrid.astro"
 import TableOfContents from "@/components/navigation/TableOfContents.astro"
 import { articleJsonLd } from "@/utils/structured-data"
 import {
-  getPostsForLocale,
+  getPublishedPosts,
   postCategorySlug,
   postPath,
   postSlug,
@@ -35,9 +35,10 @@ const { post } = Astro.props
 const { Content, headings } = await render(post)
 const author = await getAuthor(post.data.locale, post.data.authors[0])
 const path = postPath(post)
-const alternates = postLocaleAlternates(post)
-const posts = await getPostsForLocale(post.data.locale)
-const relatedPosts = selectRelatedPosts(posts, post, 3)
+const allPosts = await getPublishedPosts()
+const alternates = postLocaleAlternates(post, allPosts)
+const localePosts = allPosts.filter((entry) => entry.data.locale === post.data.locale)
+const relatedPosts = selectRelatedPosts(localePosts, post, 3)
 const categorySlug = postCategorySlug(post)
 const category = getCategory(categorySlug)
 const categoryLabel =
@@ -67,6 +68,13 @@ const publishedLabel = dateFormatter.format(post.data.pubDate)
 const modifiedLabel = dateFormatter.format(
   post.data.updatedDate ?? post.data.pubDate
 )
+const authorUrl = `${SITE_CONFIG.url}/${post.data.locale}/author/`
+const keywords = [...new Set([categoryLabel, ...tagLabels])]
+const sourceBody = (post as typeof post & { body?: string }).body ?? ""
+const wordCount = (sourceBody ?? "")
+  .replace(/```[\s\S]*?```/g, " ")
+  .replace(/<[^>]+>/g, " ")
+  .match(/[\p{L}\p{N}]+/gu)?.length ?? 0
 const publishedText = t(post.data.locale, "post.publishedAt")
 const modifiedText = t(post.data.locale, "post.modifiedAt")
 const tocHeadings = headings
@@ -87,9 +95,12 @@ const jsonLd = articleJsonLd({
   authors: [
     {
       name: author?.data.name ?? SITE_CONFIG.name,
-      url: `${SITE_CONFIG.url}/${post.data.locale}/author/`,
+      url: authorUrl,
     },
   ],
+  articleSection: categoryLabel,
+  keywords,
+  wordCount,
 })
 ---
 
@@ -99,7 +110,16 @@ const jsonLd = articleJsonLd({
   title={post.data.seoTitle ?? post.data.title}
   description={metaDescription}
   image={post.data.heroImage}
+  imageAlt={post.data.heroImageAlt}
+  canonicalOverride={post.data.canonical}
   ogType="article"
+  articleMeta={{
+    publishedTime: post.data.pubDate.toISOString(),
+    modifiedTime: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+    author: authorUrl,
+    section: categoryLabel,
+    tags: tagLabels,
+  }}
   jsonLd={jsonLd}
   alternates={alternates}
   dynamicGlass

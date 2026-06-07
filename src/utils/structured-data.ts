@@ -68,6 +68,9 @@ export function articleJsonLd(input: {
   pubDate: Date
   updatedDate?: Date
   authors: SeoAuthor[]
+  articleSection: string
+  keywords: string[]
+  wordCount: number
 }) {
   const url = canonicalUrl(input.lang, input.path)
   const image = absoluteUrl(input.image)
@@ -76,6 +79,7 @@ export function articleJsonLd(input: {
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
+    "@id": `${url}#article`,
     headline: input.title,
     description: input.description,
     inLanguage: language,
@@ -85,6 +89,10 @@ export function articleJsonLd(input: {
       "@id": url,
     },
     image: [image],
+    thumbnailUrl: image,
+    articleSection: input.articleSection,
+    keywords: input.keywords,
+    wordCount: input.wordCount,
     datePublished: input.pubDate.toISOString(),
     dateModified: (input.updatedDate ?? input.pubDate).toISOString(),
     publisher: {
