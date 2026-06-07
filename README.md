@@ -52,7 +52,7 @@ account, wallet, or Cloudflare credentials.
 
 ## Requirements
 
-- Node.js 22 or newer
+- Node.js 24 or newer
 - pnpm
 
 ## Start
