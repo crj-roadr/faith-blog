@@ -351,7 +351,7 @@ const activityDataJson = JSON.stringify(activityByYear).replace(/</g, "\\u003c")
                   <span class="text-xs font-medium text-muted-foreground">
                     {post.publishedAt}
                   </span>
-                  <h3 class="font-semibold text-foreground">
+                  <h3 class="card-title line-clamp-2 text-foreground">
                     {post.title}
                   </h3>
                 </a>
@@ -538,7 +538,7 @@ const activityDataJson = JSON.stringify(activityByYear).replace(/</g, "\\u003c")
               meta.textContent = post.publishedAt
 
               const title = document.createElement("h3")
-              title.className = "font-semibold text-foreground"
+              title.className = "card-title line-clamp-2 text-foreground"
               title.textContent = post.title
 
               link.append(meta, title)

@@ -244,6 +244,10 @@
   box-shadow: var(--glass-shadow-hover);
 }
 
+.card-title {
+  @apply text-4xl leading-tight font-semibold tracking-tight;
+}
+
 .article-hero__content.post-card__content {
   background-color: rgba(38, 38, 38, 0.68);
   border-color: transparent;
@@ -462,7 +466,7 @@ html:lang(ar) .article-prose :where(p, li) {
 }
 
 .taxonomy-link__title {
-  @apply text-base font-semibold text-foreground;
+  @apply text-4xl leading-tight font-semibold tracking-tight text-foreground;
 }
 
 .taxonomy-link__description {
