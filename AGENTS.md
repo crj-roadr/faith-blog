@@ -6,7 +6,7 @@ This file tells coding agents how to work in this repository. Keep engineering
 workflow, commands, repository structure, deployment, and contribution rules
 here. Keep visual tokens and UI appearance rules in `DESIGN.md`.
 
-Polyglow is an Astro 6 static multilingual editorial theme. The current default
+Polyglow is an Astro 7 static multilingual editorial theme. The current default
 locale is English, public routes keep locale prefixes, and `/` redirects to
 `/en/`. The repository must remain usable without private services, databases,
 Cloudflare credentials, analytics IDs, ad IDs, payment credentials, or wallet
@@ -14,7 +14,8 @@ addresses.
 
 ## Stack
 
-- Astro 6 with `output: "static"` and `trailingSlash: "always"`.
+- Astro 7 with `output: "static"`, `trailingSlash: "always"`, and
+  `compressHTML: true` to preserve the existing HTML whitespace behavior.
 - Tailwind CSS v4 through `@tailwindcss/vite` and CSS-first runtime tokens.
 - MDX content collections backed by `astro:content` glob loaders.
 - `@astrojs/markdown-satteri` as the Markdown and MDX processor.
@@ -33,7 +34,13 @@ addresses.
 
 - Install dependencies: `pnpm install`
 - Start development server: `pnpm dev`
+- Start managed background development server: `pnpm dev:background`
+- Check managed development server: `pnpm dev:status`
+- Read managed development server logs: `pnpm dev:logs`
+- Stop managed development server: `pnpm dev:stop`
+- Start development server with JSON logs: `pnpm dev:json`
 - Typecheck and build: `pnpm build`
+- Verify Astro 7 upgrade contract: `pnpm test:upgrade`
 - Preview built site: `pnpm preview`
 - Deploy prebuilt static assets to Cloudflare Workers: `pnpm deploy`
 
@@ -89,6 +96,9 @@ Use pnpm for Node.js work. Do not add npm, yarn, or bun lockfiles.
 
 - Keep the primary site static-first. A plain `pnpm build` must produce a usable
   static site in `dist`.
+- Use Astro 7 stable defaults for the Rust compiler, Satteri Markdown pipeline,
+  queued rendering, and advanced routing. Do not reintroduce removed Astro 6
+  experimental flags such as `rustCompiler` or `queuedRendering`.
 - Preserve locale-prefixed routes. The default locale is `en`, and `/`
   redirects to `/en/`.
 - Preserve Astro `trailingSlash: "always"` behavior.

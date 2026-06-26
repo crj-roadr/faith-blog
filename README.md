@@ -2,7 +2,7 @@
 
 [中文说明](readme-zh.md)
 
-Polyglow is a static-first Astro 6 theme for multilingual editorial publishing.
+Polyglow is a static-first Astro 7 theme for multilingual editorial publishing.
 It ships locale-prefixed routes, content collections, category and tag archives,
 author pages, Pagefind search, RSS, sitemap output, SEO metadata through
 `astro-seo`, JSON-LD, Astro image optimization, light/dark themes, Astro view
@@ -19,12 +19,12 @@ account, wallet, or Cloudflare credentials.
 
 ## Features
 
-- 🧱 Static-first Astro 6 architecture with no required CMS, database, or private
+- 🧱 Static-first Astro 7 architecture with no required CMS, database, or private
   runtime service.
 - 🌐 Astro-native i18n with 11 locales, locale-prefixed routes, RTL support,
   `hreflang`, and multilingual sitemap output.
 - 📝 Markdown and MDX content collections for posts, pages, authors, categories,
-  tags, and paginated archives.
+  tags, and paginated archives, processed through Astro's Satteri pipeline.
 - 🧭 Built-in RSS, sitemap, robots.txt, SEO metadata, JSON-LD, and agent-facing
   discovery files.
 - 🔎 Pagefind-powered static full-text search.
@@ -32,6 +32,8 @@ account, wallet, or Cloudflare credentials.
   long-form typography.
 - 🖼️ Astro image optimization with responsive layouts and modern AVIF/WebP output.
 - ✨ Astro view transitions and hover-based link prefetching.
+- ⚙️ Astro 7 managed background dev server and JSON log commands for agent
+  workflows.
 - 🔤 CJK-friendly typography with `text-autospace` support and Arabic RTL layout.
 - 💻 Expressive code blocks with light and dark syntax themes.
 - 📣 Optional Google AdSense and Google Tag Manager integration, with GTM loaded
@@ -72,10 +74,21 @@ http://localhost:4321/en/
 
 ```bash
 pnpm dev      # Start local development
+pnpm dev:background # Start Astro's managed background dev server
+pnpm dev:status     # Check background dev server status
+pnpm dev:logs       # Read background dev server logs
+pnpm dev:stop       # Stop the background dev server
+pnpm dev:json       # Start dev server with JSON logs
 pnpm build    # Run astro check and build static output
+pnpm test:upgrade # Verify the Astro 7 upgrade contract
 pnpm preview  # Preview the built site locally
 pnpm deploy   # Build, then deploy dist with Wrangler
 ```
+
+The configuration keeps `compressHTML: true` after the Astro 7 upgrade so the
+existing theme keeps Astro 6 style HTML whitespace behavior. Astro 7's Rust
+compiler, queued rendering, advanced routing, and Satteri Markdown pipeline are
+used as stable defaults without the removed Astro 6 experimental flags.
 
 ## Project Structure
 
