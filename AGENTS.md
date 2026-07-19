@@ -173,3 +173,20 @@ Use pnpm for Node.js work. Do not add npm, yarn, or bun lockfiles.
 - For dependency updates, merge only after conflicts are resolved and checks
   pass.
 - For Cloudflare changes, state whether ordinary static hosting is affected.
+
+## Agent skills
+
+### Issue tracker
+
+Issues and PRDs are tracked in GitHub Issues using the `gh` CLI. See
+`docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The repo uses the five default triage labels. See
+`docs/agents/triage-labels.md`.
+
+### Domain docs
+
+The repo uses a single-context domain documentation layout. See
+`docs/agents/domain.md`.
