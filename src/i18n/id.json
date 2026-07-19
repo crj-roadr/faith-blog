@@ -99,6 +99,7 @@
     }
   },
   "navigation": {
+    "primary": "Navigasi utama",
     "build": "Startup",
     "invest": "Investasi",
     "life": "Kehidupan",
@@ -154,6 +155,9 @@
     "previous": "Sebelumnya",
     "readMore": "Baca Selengkapnya",
     "pagination": {
+      "label": "Navigasi halaman",
+      "previousPage": "Halaman sebelumnya",
+      "nextPage": "Halaman berikutnya",
       "totalPosts": "{count} artikel total",
       "totalPostsWithLang": "{lang} {count} artikel total",
       "pageInfo": "Halaman {current} dari {total}",
@@ -184,7 +188,8 @@
     "title": "Halaman Tidak Ditemukan",
     "message": "Maaf, halaman yang Anda cari tidak ada atau telah dihapus.",
     "backToHome": "Kembali ke Beranda",
-    "browsePosts": "Jelajahi Artikel"
+    "browsePosts": "Jelajahi Artikel",
+    "links": "Tautan halaman tidak ditemukan"
   },
   "search": {
     "title": "Cari",

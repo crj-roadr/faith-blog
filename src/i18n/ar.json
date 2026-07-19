@@ -99,6 +99,7 @@
     }
   },
   "navigation": {
+    "primary": "التنقل الرئيسي",
     "build": "الشركات الناشئة",
     "invest": "الاستثمار",
     "life": "الحياة",
@@ -154,6 +155,9 @@
     "previous": "السابق",
     "readMore": "اقرأ المزيد",
     "pagination": {
+      "label": "التنقل بين الصفحات",
+      "previousPage": "الصفحة السابقة",
+      "nextPage": "الصفحة التالية",
       "totalPosts": "{count} مقالة إجمالا",
       "totalPostsWithLang": "{lang} {count} مقالة إجمالا",
       "pageInfo": "صفحة {current} من {total}",
@@ -184,7 +188,8 @@
     "title": "الصفحة غير موجودة",
     "message": "الصفحة التي تبحث عنها غير موجودة أو تمت إزالتها.",
     "backToHome": "العودة للرئيسية",
-    "browsePosts": "تصفح المقالات"
+    "browsePosts": "تصفح المقالات",
+    "links": "روابط الصفحة غير الموجودة"
   },
   "search": {
     "title": "بحث",

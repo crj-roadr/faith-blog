@@ -99,6 +99,7 @@
     }
   },
   "navigation": {
+    "primary": "기본 탐색",
     "build": "스타트업",
     "invest": "투자",
     "life": "인생",
@@ -154,6 +155,9 @@
     "previous": "이전",
     "readMore": "더 보기",
     "pagination": {
+      "label": "페이지 탐색",
+      "previousPage": "이전 페이지",
+      "nextPage": "다음 페이지",
       "totalPosts": "총 {count} 개의 게시물",
       "totalPostsWithLang": "{lang} 총 {count} 개의 게시물",
       "pageInfo": "{current} / {total} 페이지",
@@ -184,7 +188,8 @@
     "title": "페이지를 찾을 수 없습니다",
     "message": "죄송합니다. 요청하신 페이지가 존재하지 않거나 삭제되었습니다.",
     "backToHome": "홈으로 돌아가기",
-    "browsePosts": "게시물 탐색"
+    "browsePosts": "게시물 탐색",
+    "links": "페이지를 찾을 수 없을 때의 링크"
   },
   "search": {
     "title": "검색",

@@ -99,6 +99,7 @@
     }
   },
   "navigation": {
+    "primary": "メインナビゲーション",
     "build": "スタートアップ",
     "invest": "投資",
     "life": "人生",
@@ -154,6 +155,9 @@
     "previous": "前へ",
     "readMore": "続きを読む",
     "pagination": {
+      "label": "ページネーション",
+      "previousPage": "前のページ",
+      "nextPage": "次のページ",
       "totalPosts": "全 {count} 件の投稿",
       "totalPostsWithLang": "{lang} 全 {count} 件の投稿",
       "pageInfo": "{current} / {total} ページ",
@@ -184,7 +188,8 @@
     "title": "ページが見つかりません",
     "message": "申し訳ありませんが、アクセスされたページは存在しないか、削除された可能性があります。",
     "backToHome": "ホームに戻る",
-    "browsePosts": "記事一覧"
+    "browsePosts": "記事一覧",
+    "links": "ページが見つからない場合のリンク"
   },
   "search": {
     "title": "検索",

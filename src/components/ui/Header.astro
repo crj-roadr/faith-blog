@@ -3,6 +3,7 @@ import type { Locale } from "@/config/locales"
 import { getPrimaryCategories, getTagsForCategory } from "@/config/taxonomy"
 import { SITE_CONFIG } from "@/config/site"
 import { localePath } from "@/utils/routes"
+import { getPrimaryNavigationKey } from "@/utils/navigation"
 import { t } from "@/utils/translations"
 import OptimizedPicture from "@/components/features/OptimizedPicture.astro"
 import Icon from "@/components/ui/Icon.astro"
@@ -18,6 +19,7 @@ interface Props {
 
 const { lang, path = "/" } = Astro.props
 const primaryCategories = getPrimaryCategories()
+const currentNavigationKey = getPrimaryNavigationKey(path)
 ---
 
 <header
@@ -46,7 +48,7 @@ const primaryCategories = getPrimaryCategories()
     </a>
     <nav
       class="hidden items-center gap-7 justify-self-center text-sm lg:col-start-2 lg:flex"
-      aria-label="Primary navigation"
+      aria-label={t(lang, "navigation.primary")}
     >
       {
         primaryCategories.map((item) => (
@@ -54,6 +56,7 @@ const primaryCategories = getPrimaryCategories()
             <a
               class="nav-link font-medium"
               href={localePath(lang, `/category/${item.slug}/`)}
+              aria-current={currentNavigationKey === item.slug ? "page" : undefined}
             >
               {item.labelByLocale[lang]}
             </a>
@@ -76,7 +79,11 @@ const primaryCategories = getPrimaryCategories()
           </div>
         ))
       }
-      <a class="nav-link font-medium" href={localePath(lang, "/posts/")}>
+      <a
+        class="nav-link font-medium"
+        href={localePath(lang, "/posts/")}
+        aria-current={currentNavigationKey === "posts" ? "page" : undefined}
+      >
         {t(lang, "pages.posts.title")}
       </a>
     </nav>
@@ -93,7 +100,7 @@ const primaryCategories = getPrimaryCategories()
       </a>
       <LanguageSwitcher lang={lang} path={path} />
       <ThemeSwitcher lang={lang} />
-      <MobileNav lang={lang} />
+      <MobileNav lang={lang} path={path} />
     </div>
   </div>
 </header>

@@ -99,6 +99,7 @@
     }
   },
   "navigation": {
+    "primary": "主导航",
     "build": "创业",
     "invest": "投资",
     "life": "生活",
@@ -154,6 +155,9 @@
     "previous": "上一页",
     "readMore": "阅读更多",
     "pagination": {
+      "label": "分页导航",
+      "previousPage": "上一页",
+      "nextPage": "下一页",
       "totalPosts": "共 {count} 篇文章",
       "totalPostsWithLang": "{lang}共 {count} 篇文章",
       "pageInfo": "第 {current} 页，共 {total} 页",
@@ -184,7 +188,8 @@
     "title": "页面未找到",
     "message": "抱歉，您访问的页面不存在或已被移除。",
     "backToHome": "返回首页",
-    "browsePosts": "浏览文章"
+    "browsePosts": "浏览文章",
+    "links": "未找到页面的相关链接"
   },
   "search": {
     "title": "搜索",

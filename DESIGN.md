@@ -260,6 +260,8 @@ dropdown items use 8px, regular cards use 10px to 14px, image cards use 24px to
 
 - **Header and nav:** compact height, theme background, subtle border, grouped
   category dropdowns, search, language switcher, theme switcher, and mobile nav.
+  The current primary destination keeps the standard underline visible, uses
+  stronger text weight, and exposes `aria-current="page"`.
 - **Post cards:** image-first with readable glass panels and real imagery.
 - **Article page:** image hero, compact metadata, centered readable prose, and
   related posts.

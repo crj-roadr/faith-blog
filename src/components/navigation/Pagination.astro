@@ -1,7 +1,10 @@
 ---
 import type { PaginationPageItem } from "@/utils/pagination"
+import type { Locale } from "@/config/locales"
+import { t } from "@/utils/translations"
 
 interface Props {
+  lang: Locale
   prev?: string
   next?: string
   first?: string
@@ -11,7 +14,7 @@ interface Props {
   totalPages?: number
 }
 
-const { prev, next, pages = [], currentPage, totalPages } = Astro.props
+const { lang, prev, next, pages = [], currentPage, totalPages } = Astro.props
 const itemClass =
   "inline-flex size-10 items-center justify-center rounded-lg bg-background/80 text-sm font-medium text-foreground shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-accent disabled:pointer-events-none disabled:opacity-40 dark:bg-white/5"
 const disabledClass = `${itemClass} opacity-35`
@@ -25,18 +28,23 @@ const pageItems =
 
 <nav
   class="mt-10 flex items-center justify-center gap-3"
-  aria-label="Pagination"
+  aria-label={t(lang, "common.pagination.label")}
 >
   {
     prev ? (
-      <a class={itemClass} href={prev} rel="prev" aria-label="Previous page">
+      <a
+        class={itemClass}
+        href={prev}
+        rel="prev"
+        aria-label={t(lang, "common.pagination.previousPage")}
+      >
         &lsaquo;
       </a>
     ) : (
       <span
         class={disabledClass}
         aria-disabled="true"
-        aria-label="Previous page"
+        aria-label={t(lang, "common.pagination.previousPage")}
       >
         &lsaquo;
       </span>
@@ -53,13 +61,22 @@ const pageItems =
           class="inline-flex size-10 items-center justify-center rounded-lg bg-foreground text-sm font-semibold text-background shadow-sm"
           aria-current="page"
           aria-label={totalPages
-            ? `Page ${item.page} of ${totalPages}`
-            : `Page ${item.page}`}
+            ? t(lang, "common.pagination.pageInfo", {
+                current: item.page,
+                total: totalPages,
+              })
+            : t(lang, "common.pagination.pageLabel", { page: item.page })}
         >
           {item.page}
         </span>
       ) : (
-        <a class={itemClass} href={item.href} aria-label={`Page ${item.page}`}>
+        <a
+          class={itemClass}
+          href={item.href}
+          aria-label={t(lang, "common.pagination.pageLabel", {
+            page: item.page,
+          })}
+        >
           {item.page}
         </a>
       )
@@ -67,12 +84,21 @@ const pageItems =
   }
   {
     next ? (
-      <a class={itemClass} href={next} rel="next" aria-label="Next page">
+      <a
+        class={itemClass}
+        href={next}
+        rel="next"
+        aria-label={t(lang, "common.pagination.nextPage")}
+      >
         &rsaquo;
       </a>
     ) : (
       <>
-        <span class={disabledClass} aria-disabled="true" aria-label="Next page">
+        <span
+          class={disabledClass}
+          aria-disabled="true"
+          aria-label={t(lang, "common.pagination.nextPage")}
+        >
           &rsaquo;
         </span>
       </>

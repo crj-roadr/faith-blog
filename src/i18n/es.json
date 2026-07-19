@@ -99,6 +99,7 @@
     }
   },
   "navigation": {
+    "primary": "Navegación principal",
     "build": "Startup",
     "invest": "Invertir",
     "life": "Vida",
@@ -154,6 +155,9 @@
     "previous": "Anterior",
     "readMore": "Leer más",
     "pagination": {
+      "label": "Paginación",
+      "previousPage": "Página anterior",
+      "nextPage": "Página siguiente",
       "totalPosts": "{count} artículos en total",
       "totalPostsWithLang": "{lang} {count} artículos en total",
       "pageInfo": "Página {current} de {total}",
@@ -184,7 +188,8 @@
     "title": "Página no encontrada",
     "message": "Lo sentimos, la página que buscas no existe o ha sido eliminada.",
     "backToHome": "Volver al inicio",
-    "browsePosts": "Explorar artículos"
+    "browsePosts": "Explorar artículos",
+    "links": "Enlaces de página no encontrada"
   },
   "search": {
     "title": "Buscar",

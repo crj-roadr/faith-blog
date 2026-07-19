@@ -4,14 +4,17 @@ import type { Locale } from "@/config/locales"
 import { SITE_CONFIG } from "@/config/site"
 import { getPrimaryCategories, getTagsForCategory } from "@/config/taxonomy"
 import { localePath } from "@/utils/routes"
+import { getPrimaryNavigationKey } from "@/utils/navigation"
 import { t } from "@/utils/translations"
 
 interface Props {
   lang: Locale
+  path?: string
 }
 
-const { lang } = Astro.props
+const { lang, path = "/" } = Astro.props
 const primaryCategories = getPrimaryCategories()
+const currentNavigationKey = getPrimaryNavigationKey(path)
 ---
 
 <div class="lg:hidden" data-mobile-nav>
@@ -62,8 +65,9 @@ const primaryCategories = getPrimaryCategories()
         primaryCategories.map((category) => (
           <div class="grid grid-cols-[minmax(0,1fr)_auto] rounded-lg">
             <a
-              class="col-start-1 row-start-1 flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-foreground hover:bg-muted"
+              class="col-start-1 row-start-1 flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-foreground hover:bg-muted aria-current:font-semibold aria-current:underline aria-current:decoration-2 aria-current:underline-offset-4"
               href={localePath(lang, `/category/${category.slug}/`)}
+              aria-current={currentNavigationKey === category.slug ? "page" : undefined}
             >
               {category.labelByLocale[lang]}
             </a>
@@ -94,8 +98,9 @@ const primaryCategories = getPrimaryCategories()
         ))
       }
       <a
-        class="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium hover:bg-muted"
+        class="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium hover:bg-muted aria-current:font-semibold aria-current:underline aria-current:decoration-2 aria-current:underline-offset-4"
         href={localePath(lang, "/posts/")}
+        aria-current={currentNavigationKey === "posts" ? "page" : undefined}
       >
         {t(lang, "pages.posts.title")}
       </a>

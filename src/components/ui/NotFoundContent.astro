@@ -29,6 +29,7 @@ const localizedNotFound = Object.fromEntries(
         message: t(locale, "notFound.message"),
         searchPrompt: t(locale, "search.subtitle"),
         searchTitle: t(locale, "search.title"),
+        notFoundLinks: t(locale, "notFound.links"),
         backToHome: t(locale, "notFound.backToHome"),
         browsePosts: t(locale, "notFound.browsePosts"),
         homeHref: localePath(locale, "/"),
@@ -76,7 +77,7 @@ const localizedNotFoundJson = JSON.stringify(localizedNotFound).replaceAll(
   </div>
   <nav
     class="mt-6 flex flex-wrap items-center justify-center gap-2"
-    aria-label="Not found links"
+    aria-label={t(lang, "notFound.links")}
     data-not-found-nav
   >
     <a class="not-found-link" href={localePath(lang, "/")} data-not-found-home>
@@ -130,5 +131,7 @@ const localizedNotFoundJson = JSON.stringify(localizedNotFound).replaceAll(
   const postsLink = root.querySelector("[data-not-found-posts]")
   postsLink?.setAttribute("href", labels.postsHref)
   postsLink?.querySelector("span")?.replaceChildren(labels.browsePosts)
+
+  root.querySelector("[data-not-found-nav]")?.setAttribute("aria-label", labels.notFoundLinks)
 })()`}
 />
