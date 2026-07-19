@@ -101,7 +101,11 @@
   "navigation": {
     "build": "Стартап",
     "invest": "Инвестировать",
-    "life": "Жизнь"
+    "life": "Жизнь",
+    "mobile": "Мобильная навигация",
+    "menu": "Меню",
+    "closeMenu": "Закрыть меню",
+    "categoryTags": "Показать теги: {category}"
   },
   "pages": {
     "about": {

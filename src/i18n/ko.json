@@ -101,7 +101,11 @@
   "navigation": {
     "build": "스타트업",
     "invest": "투자",
-    "life": "인생"
+    "life": "인생",
+    "mobile": "모바일 탐색",
+    "menu": "메뉴",
+    "closeMenu": "메뉴 닫기",
+    "categoryTags": "{category} 태그 보기"
   },
   "pages": {
     "about": {

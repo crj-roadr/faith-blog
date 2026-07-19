@@ -101,7 +101,11 @@
   "navigation": {
     "build": "Startup",
     "invest": "Investir",
-    "life": "Vida"
+    "life": "Vida",
+    "mobile": "Navegação móvel",
+    "menu": "Menu",
+    "closeMenu": "Fechar menu",
+    "categoryTags": "Mostrar etiquetas de {category}"
   },
   "pages": {
     "about": {

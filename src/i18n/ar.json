@@ -101,7 +101,11 @@
   "navigation": {
     "build": "الشركات الناشئة",
     "invest": "الاستثمار",
-    "life": "الحياة"
+    "life": "الحياة",
+    "mobile": "التنقل عبر الهاتف",
+    "menu": "القائمة",
+    "closeMenu": "إغلاق القائمة",
+    "categoryTags": "عرض وسوم {category}"
   },
   "pages": {
     "about": {

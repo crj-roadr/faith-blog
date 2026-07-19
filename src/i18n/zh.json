@@ -101,7 +101,11 @@
   "navigation": {
     "build": "创业",
     "invest": "投资",
-    "life": "生活"
+    "life": "生活",
+    "mobile": "移动导航",
+    "menu": "菜单",
+    "closeMenu": "关闭菜单",
+    "categoryTags": "显示{category}标签"
   },
   "pages": {
     "about": {

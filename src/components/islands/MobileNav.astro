@@ -17,8 +17,8 @@ const primaryCategories = getPrimaryCategories()
 <div class="lg:hidden" data-mobile-nav>
   <button
     type="button"
-    class="inline-flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-    aria-label="Menu"
+    class="inline-flex size-11 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+    aria-label={t(lang, "navigation.menu")}
     aria-haspopup="dialog"
     aria-expanded="false"
     data-mobile-nav-trigger
@@ -47,8 +47,8 @@ const primaryCategories = getPrimaryCategories()
       </p>
       <button
         type="button"
-        class="inline-flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-        aria-label="Close menu"
+        class="inline-flex size-11 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        aria-label={t(lang, "navigation.closeMenu")}
         data-mobile-nav-close
       >
         <Icon name="x" class="size-4" />
@@ -56,39 +56,51 @@ const primaryCategories = getPrimaryCategories()
     </div>
     <nav
       class="flex flex-col gap-2 overflow-y-auto px-4 py-4"
-      aria-label="Mobile navigation"
+      aria-label={t(lang, "navigation.mobile")}
     >
       {
         primaryCategories.map((category) => (
-          <details class="group rounded-lg">
-            <summary class="flex min-h-10 cursor-pointer list-none items-center justify-between rounded-lg px-3 text-sm font-medium text-foreground hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
-              <span>{category.labelByLocale[lang]}</span>
-              <Icon
-                name="chevron-down"
-                class="size-4 text-muted-foreground transition-transform group-open:rotate-180"
-              />
-            </summary>
-            <div class="mt-1 flex flex-col gap-1 ps-3">
-              {getTagsForCategory(category.slug).map((tag) => (
-                <a
-                  class="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
-                  href={localePath(lang, `/tags/${tag.slug}/`)}
-                >
-                  {tag.labelByLocale[lang]}
-                </a>
-              ))}
-            </div>
-          </details>
+          <div class="grid grid-cols-[minmax(0,1fr)_auto] rounded-lg">
+            <a
+              class="col-start-1 row-start-1 flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-foreground hover:bg-muted"
+              href={localePath(lang, `/category/${category.slug}/`)}
+            >
+              {category.labelByLocale[lang]}
+            </a>
+            <details class="group contents">
+              <summary
+                class="col-start-2 row-start-1 inline-flex size-11 cursor-pointer list-none items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                aria-label={t(lang, "navigation.categoryTags", {
+                  category: category.labelByLocale[lang],
+                })}
+              >
+                <Icon
+                  name="chevron-down"
+                  class="size-4 text-muted-foreground transition-transform group-open:rotate-180"
+                />
+              </summary>
+              <div class="col-span-2 mt-1 flex flex-col gap-1 ps-3">
+                {getTagsForCategory(category.slug).map((tag) => (
+                  <a
+                    class="flex min-h-11 items-center rounded-md px-3 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
+                    href={localePath(lang, `/tags/${tag.slug}/`)}
+                  >
+                    {tag.labelByLocale[lang]}
+                  </a>
+                ))}
+              </div>
+            </details>
+          </div>
         ))
       }
       <a
-        class="rounded-lg px-3 py-2 text-sm font-medium hover:bg-muted"
+        class="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium hover:bg-muted"
         href={localePath(lang, "/posts/")}
       >
         {t(lang, "pages.posts.title")}
       </a>
       <a
-        class="rounded-lg px-3 py-2 text-sm font-medium hover:bg-muted"
+        class="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium hover:bg-muted"
         href={localePath(lang, "/search/")}
       >
         {t(lang, "search.title")}
@@ -100,6 +112,10 @@ const primaryCategories = getPrimaryCategories()
 <script is:inline>
   ;(() => {
     window.__mobileNavCleanup?.()
+
+    const closeCompletions = new WeakMap()
+    const openingFrames = new WeakMap()
+    const modalBackgrounds = new WeakMap()
 
     const getParts = (root) => ({
       trigger: root.querySelector("[data-mobile-nav-trigger]"),
@@ -115,16 +131,36 @@ const primaryCategories = getPrimaryCategories()
         !(panel instanceof HTMLElement)
       )
         return
+      closeCompletions.get(panel)?.()
+      const openingFrame = openingFrames.get(panel)
+      if (openingFrame) cancelAnimationFrame(openingFrame)
       overlay.hidden = false
       panel.hidden = false
-      requestAnimationFrame(() => {
+      const background = [
+        document.querySelector("main"),
+        document.querySelector("footer"),
+        document.querySelector("[data-header-brand]"),
+        document.querySelector("header nav"),
+        ...document.querySelectorAll("[data-header-actions] > :not([data-mobile-nav])"),
+      ].filter((element) => element instanceof HTMLElement)
+      modalBackgrounds.set(root, background)
+      background.forEach((element) => {
+        element.inert = true
+      })
+      if (root.dataset.previousOverflow === undefined) {
+        root.dataset.previousOverflow = document.documentElement.style.overflow
+      }
+      document.documentElement.style.overflow = "hidden"
+      const frame = requestAnimationFrame(() => {
+        openingFrames.delete(panel)
         panel.classList.remove("translate-x-full")
       })
+      openingFrames.set(panel, frame)
       trigger.setAttribute("aria-expanded", "true")
-      panel.querySelector("a, button, summary")?.focus()
+      panel.querySelector("[data-mobile-nav-close]")?.focus()
     }
 
-    const closeNav = (root, restoreFocus = true) => {
+    const closeNav = (root, restoreFocus = true, immediate = false) => {
       const { trigger, overlay, panel } = getParts(root)
       if (
         !(trigger instanceof HTMLElement) ||
@@ -132,13 +168,35 @@ const primaryCategories = getPrimaryCategories()
         !(panel instanceof HTMLElement)
       )
         return
+      const openingFrame = openingFrames.get(panel)
+      if (openingFrame) cancelAnimationFrame(openingFrame)
+      openingFrames.delete(panel)
+      closeCompletions.get(panel)?.()
       panel.classList.add("translate-x-full")
       trigger.setAttribute("aria-expanded", "false")
-      window.setTimeout(() => {
+      let active = true
+      const cleanup = () => {
+        active = false
+        closeCompletions.delete(panel)
+      }
+      const finish = () => {
+        if (!active || !panel.classList.contains("translate-x-full")) return
+        active = false
+        closeCompletions.delete(panel)
         overlay.hidden = true
         panel.hidden = true
-      }, 200)
-      if (restoreFocus) trigger.focus()
+        modalBackgrounds.get(root)?.forEach((element) => {
+          element.inert = false
+        })
+        modalBackgrounds.delete(root)
+        document.documentElement.style.overflow = root.dataset.previousOverflow || ""
+        delete root.dataset.previousOverflow
+        if (restoreFocus) trigger.focus()
+      }
+      closeCompletions.set(panel, cleanup)
+      const animations = panel.getAnimations()
+      if (immediate || animations.length === 0) finish()
+      else Promise.allSettled(animations.map((animation) => animation.finished)).then(finish)
     }
 
     const handleClick = (event) => {
@@ -158,21 +216,45 @@ const primaryCategories = getPrimaryCategories()
       if (closeTarget instanceof HTMLElement) {
         const root = closeTarget.closest("[data-mobile-nav]")
         if (root instanceof HTMLElement) closeNav(root)
+        return
+      }
+
+      const navigationTarget = target.closest("[data-mobile-nav-panel] a")
+      if (navigationTarget instanceof HTMLElement) {
+        const root = navigationTarget.closest("[data-mobile-nav]")
+        if (root instanceof HTMLElement) closeNav(root, false)
       }
     }
 
     const handleKeydown = (event) => {
-      if (event.key !== "Escape") return
       const panel = document.querySelector(
         "[data-mobile-nav-panel]:not([hidden])"
       )
       const root = panel?.closest("[data-mobile-nav]")
-      if (root instanceof HTMLElement) closeNav(root)
+      if (!(root instanceof HTMLElement) || !(panel instanceof HTMLElement)) return
+      if (event.key === "Escape") {
+        closeNav(root)
+        return
+      }
+      if (event.key !== "Tab") return
+      const focusable = Array.from(
+        panel.querySelectorAll("a[href], button:not([disabled]), summary")
+      ).filter((element) => element instanceof HTMLElement && element.getClientRects().length)
+      const first = focusable[0]
+      const last = focusable.at(-1)
+      if (!first || !last) return
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
     }
 
     const handleBeforeSwap = () => {
       document.querySelectorAll("[data-mobile-nav]").forEach((root) => {
-        if (root instanceof HTMLElement) closeNav(root, false)
+        if (root instanceof HTMLElement) closeNav(root, false, true)
       })
     }
     document.addEventListener("click", handleClick)

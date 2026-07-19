@@ -101,7 +101,11 @@
   "navigation": {
     "build": "Startup",
     "invest": "Investasi",
-    "life": "Kehidupan"
+    "life": "Kehidupan",
+    "mobile": "Navigasi seluler",
+    "menu": "Menu",
+    "closeMenu": "Tutup menu",
+    "categoryTags": "Tampilkan tag {category}"
   },
   "pages": {
     "about": {
