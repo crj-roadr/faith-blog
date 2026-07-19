@@ -757,6 +757,69 @@ html:lang(ar) .article-prose :where(p, li) {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  [data-activity-year-list] {
+    scroll-behavior: auto !important;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+
+  [data-mobile-nav-panel] {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .desktop-nav-dropdown {
+    translate: -50% 0 !important;
+    transition-property: opacity, background-color, color !important;
+    transition-duration: 50ms !important;
+  }
+
+  :where(
+      .archive-row,
+      .taxonomy-card,
+      .taxonomy-link,
+      .taxonomy-pill,
+      .not-found-link,
+      .not-found-search__button,
+      .motion-lift,
+      .heos-press
+    ) {
+    translate: none !important;
+  }
+
+  .heos-press,
+  .heos-press:active,
+  [data-activity-year] {
+    scale: 1 !important;
+  }
+
+  .heos-press:active {
+    opacity: 0.78;
+  }
+
+  .post-card:hover picture img,
+  .post-card:hover > img,
+  .blur-placeholder {
+    scale: 1 !important;
+  }
+
+  [data-activity-year] {
+    transition-property: background-color, color, opacity !important;
+    transition-duration: 50ms !important;
+  }
+
+  [data-mobile-nav] summary > svg {
+    transition-duration: 1ms !important;
+  }
+
   .blur-placeholder {
     @apply transition-opacity duration-50;
   }

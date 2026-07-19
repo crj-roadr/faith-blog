@@ -319,6 +319,20 @@ dropdown items use 8px, regular cards use 10px to 14px, image cards use 24px to
   Pagefind search input and fallback, taxonomy entries, pagination, and other
   functional glass badges. Preserve light, dark, LTR, and RTL semantics.
 
+### HeOS reduced motion
+
+- Ordinary preferences retain the existing restrained, interruptible motion and
+  the LTR/RTL paths documented above.
+- `prefers-reduced-motion: reduce` removes drawer travel, dropdown displacement,
+  card and image scale, hover lift, smooth scrolling, placeholder scale, and
+  ClientRouter view-transition animation.
+- Pressed controls retain immediate opacity or color feedback without scale or
+  displacement. Year selection retains its pressed background and commits on
+  native click while its overflow rail scrolls immediately.
+- Small state indicators such as disclosure chevrons may update immediately;
+  they must not introduce delayed completion or keep modal state waiting for a
+  spatial transition.
+
 The prose wrapper class is `content-prose`. Treat it as a stable CSS API
 unless the rename is part of a deliberate cleanup across components, CSS, and
 tests.

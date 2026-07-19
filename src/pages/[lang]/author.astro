@@ -194,7 +194,7 @@ const activityDataJson = JSON.stringify(activityByYear).replace(/</g, "\\u003c")
           {
             author?.data.socials.map((social) => (
               <a
-                class="inline-flex size-11 items-center justify-center rounded-full bg-muted text-muted-foreground transition hover:-translate-y-0.5 hover:bg-accent hover:text-foreground"
+                class="motion-lift inline-flex size-11 items-center justify-center rounded-full bg-muted text-muted-foreground transition hover:-translate-y-0.5 hover:bg-accent hover:text-foreground"
                 href={social.url}
                 aria-label={social.label}
                 target={social.url.startsWith("http") ? "_blank" : undefined}
@@ -346,7 +346,7 @@ const activityDataJson = JSON.stringify(activityByYear).replace(/</g, "\\u003c")
               {currentActivity.posts.map((post) => (
                 <a
                   href={post.href}
-                  class="grid gap-1 rounded-lg bg-background/70 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:bg-accent/70 dark:bg-white/[0.03]"
+                  class="motion-lift grid gap-1 rounded-lg bg-background/70 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:bg-accent/70 dark:bg-white/[0.03]"
                 >
                   <span class="text-xs font-medium text-muted-foreground">
                     {post.publishedAt}
@@ -531,7 +531,7 @@ const activityDataJson = JSON.stringify(activityByYear).replace(/</g, "\\u003c")
               const link = document.createElement("a")
               link.href = post.href
               link.className =
-                "grid gap-1 rounded-lg bg-background/70 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:bg-accent/70 dark:bg-white/[0.03]"
+                "motion-lift grid gap-1 rounded-lg bg-background/70 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:bg-accent/70 dark:bg-white/[0.03]"
 
               const meta = document.createElement("span")
               meta.className = "text-xs font-medium text-muted-foreground"
@@ -590,11 +590,20 @@ const activityDataJson = JSON.stringify(activityByYear).replace(/</g, "\\u003c")
           const yearButton = yearButtons[0]
           return yearButton ? yearButton.offsetWidth + 8 : list.clientWidth
         }
+        const reducedMotionQuery = matchMedia("(prefers-reduced-motion: reduce)")
+        const getYearScrollBehavior = () =>
+          reducedMotionQuery.matches ? "auto" : "smooth"
         const handlePrevClick = () => {
-          list.scrollBy({ left: -getYearStep(), behavior: "smooth" })
+          list.scrollBy({
+            left: -getYearStep(),
+            behavior: getYearScrollBehavior(),
+          })
         }
         const handleNextClick = () => {
-          list.scrollBy({ left: getYearStep(), behavior: "smooth" })
+          list.scrollBy({
+            left: getYearStep(),
+            behavior: getYearScrollBehavior(),
+          })
         }
         const handleYearClick = (event) => {
           if (!(event.target instanceof Element)) return
