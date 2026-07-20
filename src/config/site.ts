@@ -90,13 +90,13 @@ const socialXHandle = `@${
 }`
 
 export const SITE_CONFIG = {
-  name: "Polyglow",
+  name: "Faith Blog",
   url: (
-    readPublicEnv("PUBLIC_SITE_URL") ?? "https://polyglow.zbz.ai"
+    readPublicEnv("PUBLIC_SITE_URL") ?? "https://faith-blog.zbz.ai"
   ).replace(/\/$/, ""),
   description:
-    "Pressing forward through the waves of startup, the fog of investing, and the ocean of life.",
-  repository: "https://github.com/zbzailabs/Polyglow",
+    "Sharing the journey of faith, trials and tribulations, and the pursuit of Christ.",
+  repository: "https://github.com/crj-roadr/faith-blog",
   social: {
     x: socialXUrl,
     xHandle: socialXHandle,
