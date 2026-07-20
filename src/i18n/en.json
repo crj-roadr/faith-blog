@@ -1,11 +1,11 @@
 {
   "site": {
-    "name": "Polyglow",
-    "titleTemplate": "%s · Polyglow",
-    "description": "Pressing forward through the waves of startup, the fog of investing, and the ocean of life.",
+    "name": "Faith Blog",
+    "titleTemplate": "%s · Faith Blog",
+    "description": "Sharing the journey of faith, trials and tribulations, and the pursuit of Christ.",
     "twitter": {
-      "site": "@polyglow",
-      "creator": "@polyglow"
+      "site": "@celso",
+      "creator": "@celso"
     }
   },
   "language": {
