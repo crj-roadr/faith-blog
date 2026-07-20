@@ -1,8 +1,8 @@
-# Polyglow
+# Faith Blog
 
 [中文说明](readme-zh.md)
 
-Polyglow is a static-first Astro 7 theme for multilingual editorial publishing.
+Faith Blog is a static-first Astro 7 theme for multilingual editorial publishing.
 It ships locale-prefixed routes, content collections, category and tag archives,
 author pages, Pagefind search, RSS, sitemap output, SEO metadata through
 `astro-seo`, JSON-LD, Astro image optimization, light/dark themes, Astro view
@@ -15,7 +15,7 @@ account, wallet, or Cloudflare credentials.
 
 | Lighthouse | Agent Readiness |
 | --- | --- |
-| [![Polyglow Lighthouse score](public/lighthouse-score---https---polyglow-zbz-ai.svg)](https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fpolyglow.zbz.ai%2F) | [![Polyglow Agent Readiness score](public/agent-readiness-https---polyglow-zbz-ai.avif)](https://isitagentready.com/polyglow.zbz.ai) |
+| [![Faith Blog Lighthouse score](public/lighthouse-score---https---faith-blog.svg)](https://pagespeed.web.dev/analysis?url=https%3A%2F%2Ffaith-blog.zbz.ai%2F) | [![Faith Blog Agent Readiness score](public/agent-readiness-https---faith-blog.avif)](https://isitagentready.com/faith-blog.zbz.ai) |
 
 ## Features
 
