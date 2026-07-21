@@ -2,10 +2,10 @@
   "$schema": "https://agentskills.io/schemas/skills-index/v0.2.0.json",
   "skills": [
     {
-      "name": "polyglow-content",
+      "name": "faith-blog-content",
       "type": "skill-md",
-      "description": "Discover and read Polyglow's public multilingual editorial content.",
-      "url": "/.well-known/agent-skills/polyglow-content/SKILL.md",
+      "description": "Discover and read Faith Blog's public multilingual devotional content.",
+      "url": "/.well-known/agent-skills/faith-blog-content/SKILL.md",
       "sha256": "e2c7ce240fb2bc32a069256ccbb44c1005951c823cf968877b615cbe98ef2178"
     }
   ]

@@ -1,12 +1,12 @@
 {
-  "name": "Polyglow Content",
+  "name": "Faith Blog",
   "version": "1.0.0",
-  "description": "Read-only public content discovery for Polyglow, a multilingual static editorial site.",
-  "url": "https://polyglow.zbz.ai",
+  "description": "Read-only public content discovery for Faith Blog, a multilingual static devotional site.",
+  "url": "https://faith.celsoribeiro.com",
   "supportedInterfaces": [
     {
       "transport": "https",
-      "url": "https://polyglow.zbz.ai/llms.txt"
+      "url": "https://faith.celsoribeiro.com/llms.txt"
     }
   ],
   "capabilities": {
@@ -16,8 +16,8 @@
   },
   "skills": [
     {
-      "id": "polyglow-content",
-      "name": "Polyglow Content Discovery",
+      "id": "faith-blog-content",
+      "name": "Faith Blog Content Discovery",
       "description": "Find public posts, locale routes, RSS feeds, and machine-readable content indexes."
     }
   ]

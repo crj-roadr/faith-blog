@@ -1,48 +1,48 @@
 {
   "linkset": [
     {
-      "anchor": "https://polyglow.zbz.ai/api",
+      "anchor": "https://faith.celsoribeiro.com/api",
       "service-desc": [
         {
-          "href": "https://polyglow.zbz.ai/openapi.json",
+          "href": "https://faith.celsoribeiro.com/openapi.json",
           "type": "application/vnd.oai.openapi+json;version=3.1",
-          "title": "Polyglow x402 API OpenAPI description"
+          "title": "Faith Blog x402 API OpenAPI description"
         }
       ],
       "service-doc": [
         {
-          "href": "https://polyglow.zbz.ai/auth.md",
+          "href": "https://faith.celsoribeiro.com/auth.md",
           "type": "text/markdown",
-          "title": "Polyglow agent authentication and payment instructions"
+          "title": "Faith Blog agent authentication and payment instructions"
         }
       ],
       "status": [
         {
-          "href": "https://polyglow.zbz.ai/api",
+          "href": "https://faith.celsoribeiro.com/api",
           "type": "application/json",
           "title": "x402 protected API status probe"
         }
       ]
     },
     {
-      "anchor": "https://polyglow.zbz.ai/api/v1",
+      "anchor": "https://faith.celsoribeiro.com/api/v1",
       "service-desc": [
         {
-          "href": "https://polyglow.zbz.ai/openapi.json",
+          "href": "https://faith.celsoribeiro.com/openapi.json",
           "type": "application/vnd.oai.openapi+json;version=3.1",
-          "title": "Polyglow x402 API OpenAPI description"
+          "title": "Faith Blog x402 API OpenAPI description"
         }
       ],
       "service-doc": [
         {
-          "href": "https://polyglow.zbz.ai/auth.md",
+          "href": "https://faith.celsoribeiro.com/auth.md",
           "type": "text/markdown",
-          "title": "Polyglow agent authentication and payment instructions"
+          "title": "Faith Blog agent authentication and payment instructions"
         }
       ],
       "status": [
         {
-          "href": "https://polyglow.zbz.ai/api/v1",
+          "href": "https://faith.celsoribeiro.com/api/v1",
           "type": "application/json",
           "title": "x402 protected API v1 status probe"
         }

@@ -1,9 +1,9 @@
 {
-  "issuer": "https://polyglow.zbz.ai",
-  "authorization_endpoint": "https://polyglow.zbz.ai/oauth/authorize",
-  "token_endpoint": "https://polyglow.zbz.ai/oauth/token",
-  "jwks_uri": "https://polyglow.zbz.ai/.well-known/jwks.json",
-  "registration_endpoint": "https://polyglow.zbz.ai/auth.md",
+  "issuer": "https://faith.celsoribeiro.com",
+  "authorization_endpoint": "https://faith.celsoribeiro.com/oauth/authorize",
+  "token_endpoint": "https://faith.celsoribeiro.com/oauth/token",
+  "jwks_uri": "https://faith.celsoribeiro.com/.well-known/jwks.json",
+  "registration_endpoint": "https://faith.celsoribeiro.com/auth.md",
   "grant_types_supported": [
     "client_credentials"
   ],

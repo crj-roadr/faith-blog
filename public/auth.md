@@ -1,6 +1,6 @@
-# auth.md - Polyglow Agent Authentication
+# auth.md - Faith Blog Agent Authentication
 
-Polyglow publishes public editorial pages and optional x402 protected API probes.
+Faith Blog publishes public devotional pages and optional x402 protected API probes.
 
 ## Current Access Model
 
@@ -18,22 +18,13 @@ Polyglow publishes public editorial pages and optional x402 protected API probes
 
 ## Agent Registration
 
-Polyglow accepts anonymous agent discovery and x402-paid API access. No human account, dashboard account, or pre-registration is required for read-only content discovery.
+Faith Blog accepts anonymous agent discovery and x402-paid API access. No human account, dashboard account, or pre-registration is required for read-only content discovery.
 
-Agents that require a registration document can use this file as the registration entrypoint.
-
-Registration endpoint: `https://polyglow.zbz.ai/auth.md`
-
-register_uri: `https://polyglow.zbz.ai/auth.md`
-
-agent_auth metadata:
-
-```json
 {
-  "skill": "https://polyglow.zbz.ai/auth.md",
-  "register_uri": "https://polyglow.zbz.ai/auth.md",
-  "claim_uri": "https://polyglow.zbz.ai/api",
-  "revocation_uri": "https://polyglow.zbz.ai/auth.md#revocation-uri",
+  "skill": "https://faith.celsoribeiro.com/auth.md",
+  "register_uri": "https://faith.celsoribeiro.com/auth.md",
+  "claim_uri": "https://faith.celsoribeiro.com/api",
+  "revocation_uri": "https://faith.celsoribeiro.com/auth.md#revocation-uri",
   "identity_types_supported": ["anonymous"],
   "anonymous": {
     "credential_types_supported": ["x402"]

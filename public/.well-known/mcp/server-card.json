@@ -1,9 +1,9 @@
 {
   "serverInfo": {
-    "name": "Polyglow Content",
+    "name": "Faith Blog",
     "version": "1.0.0"
   },
-  "description": "Read-only discovery metadata for Polyglow's public multilingual editorial content.",
+  "description": "Read-only discovery metadata for Faith Blog's public multilingual devotional content.",
   "transport": {
     "type": "none"
   },

@@ -1,11 +1,11 @@
 ---
-name: polyglow-content
-description: Use this skill to discover and read Polyglow's public multilingual editorial content.
+name: faith-blog-content
+description: Use this skill to discover and read Faith Blog's public multilingual devotional content.
 ---
 
-# Polyglow Content
+# Faith Blog Content
 
-Polyglow is a static multilingual editorial site covering startup, investing, and life notes.
+Faith Blog is a static multilingual devotional site covering faith, trials and tribulations, and the pursuit of Christ.
 
 ## Entry Points
 

@@ -92,7 +92,7 @@ const socialXHandle = `@${
 export const SITE_CONFIG = {
   name: "Faith Blog",
   url: (
-    readPublicEnv("PUBLIC_SITE_URL") ?? "https://faith-blog.zbz.ai"
+    readPublicEnv("PUBLIC_SITE_URL") ?? "https://faith.celsoribeiro.com"
   ).replace(/\/$/, ""),
   description:
     "Sharing the journey of faith, trials and tribulations, and the pursuit of Christ.",

@@ -1,7 +1,7 @@
 {
-  "resource": "https://polyglow.zbz.ai",
+  "resource": "https://faith.celsoribeiro.com",
   "authorization_servers": [
-    "https://polyglow.zbz.ai"
+    "https://faith.celsoribeiro.com"
   ],
   "scopes_supported": [
     "content.read",
@@ -10,5 +10,5 @@
   "bearer_methods_supported": [
     "header"
   ],
-  "resource_documentation": "https://polyglow.zbz.ai/auth.md"
+  "resource_documentation": "https://faith.celsoribeiro.com/auth.md"
 }
