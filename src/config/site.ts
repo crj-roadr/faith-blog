@@ -84,6 +84,7 @@ const x402ChargeMode = normalizeX402ChargeMode(
 const x402BotScoreThreshold = normalizeBotScoreThreshold(
   readPublicEnv("PUBLIC_X402_BOT_SCORE_THRESHOLD")
 )
+const socialLinkedInUrl = "https://www.linkedin.com/in/celsor23/"
 const socialXUrl = "https://x.com/zbzailabs"
 const socialXHandle = `@${
   new URL(socialXUrl).pathname.split("/").filter(Boolean)[0] ?? "polyglow"
@@ -100,6 +101,7 @@ export const SITE_CONFIG = {
   social: {
     x: socialXUrl,
     xHandle: socialXHandle,
+    linkedin: socialLinkedInUrl,
   },
   defaultOgImage: "/open-graph.webp",
   assets: {
