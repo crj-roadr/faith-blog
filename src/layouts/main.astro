@@ -15,6 +15,7 @@ import GTMHead from "@/components/widgets/GTMHead.astro"
 import GTMBody from "@/components/widgets/GTMBody.astro"
 import Adsense from "@/components/widgets/Adsense.astro"
 import Analytics from '@vercel/analytics/astro'
+import SpeedInsights from "@vercel/speed-insights/astro"
 
 interface Props {
   lang: Locale
@@ -214,6 +215,7 @@ const alternateOgLocales = LOCALES.filter((locale) => locale !== lang).map(
     <GTMHead />
     <Adsense />
     <Analytics />
+    <SpeedInsights />
   </head>
   <body>
     <GTMBody />

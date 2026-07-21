@@ -41,6 +41,7 @@
     "@solana/sysvars": "5.5.1",
     "@tailwindcss/vite": "^4.3.3",
     "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "@x402/core": "^2.19.0",
     "@x402/hono": "^2.19.0",
     "@x402/svm": "^2.19.0",
